@@ -1,0 +1,40 @@
+version: "2"
+services: 
+  nginx:
+    image: nginx:1.16.1
+    container_name: nginx
+    volumes: 
+      - ./nginx-v/html:/usr/share/nginx/html:ro
+      - ./nginx-v/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx-v/logs:/var/log/nginx
+    ports: 
+      - "80:80"
+    links: 
+      - tomcat1:docker-tomcat1
+      - tomcat2:docker-tomcat2
+    
+  tomcat1:
+    image: fpure/tomcat
+    container_name: tomcat1
+    build: 
+      context: .
+      dockerfile: tomcat/Dockerfile
+    volumes: 
+      # - ./tomcat-v1/conf:/usr/local/tomcat/conf:ro
+      - ./tomcat-v1/logs:/usr/local/tomcat/logs
+      - ./tomcat-v1/webapps:/usr/local/tomcat/webapps
+    ports: 
+      - "8080:8080"
+    
+  tomcat2:
+    image: fpure/tomcat
+    container_name: tomcat2
+    build: 
+      context: .
+      dockerfile: tomcat/Dockerfile
+    volumes: 
+      # - ./tomcat-v2/conf:/usr/local/tomcat/conf:ro
+      - ./tomcat-v2/logs:/usr/local/tomcat/logs
+      - ./tomcat-v2/webapps:/usr/local/tomcat/webapps
+    ports: 
+      - "8090:8080"

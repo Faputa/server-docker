@@ -1,0 +1,7 @@
+.vscode/
+nginx-v/logs/*
+tomcat-v*/logs/*
+tomcat-v*/webapps/*
+!tomcat-v1/webapps/ROOT
+!tomcat-v2/webapps/test
+!.gitkeep
